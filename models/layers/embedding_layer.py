@@ -41,38 +41,6 @@ class PatchEmbed(nn.Module):
         return x
 
 
-class KeypointEmbed(nn.Module):
-    def __init__(self,
-                 embed_dim: int = 512,
-                 norm_layer: nn.Module = nn.LayerNorm
-                 ):
-        '''
-        Input:
-            - input tensor should shape `[Batch_size, num_frames, num_keypoints, 2]` num_keypoints set of (x,y)
-        
-        Return:
-            - torch.Tensor([B, num_frames, num_keypoints, embed_dim])
-        
-        '''
-        super().__init__()
-        self.embedding_layer = nn.Linear(2, embed_dim)
-        self.norm = norm_layer(embed_dim)
 
-    def forward(self, x:torch.Tensor):
-        return self.norm(self.embedding_layer(x))
-
-
-
-if __name__ == '__main__':
-    batch_size = 32
-    num_frames = 59
-    num_keypoints = 21
-    embed_dim = 512
-    input_tensor = torch.ones([batch_size, num_frames, num_keypoints, 2])
-    print('input tensor: ', input_tensor.shape)
-    print(num_keypoints,' set of keypoints(x, y) for ', num_frames,' frames')
-    print('Embedding..')
-    embedding_layer = KeypointEmbed(num_keypoints,embed_dim)
-    embedded_tensor = embedding_layer(input_tensor)
-    print('embedded_tensor: ',embedded_tensor.shape)
+   
 

@@ -9,8 +9,6 @@
 
 import numpy as np
 
-import torch
-
 # --------------------------------------------------------
 # 2D sine-cosine position embedding
 # References:
@@ -25,14 +23,14 @@ def get_2d_sincos_pos_embed(embed_dim:int, grid_size, cls_token=False):
     grid = np.stack(grid, axis=0) # [2, grid_size, grid_size]
 
     grid = grid.reshape([2, 1, grid_size, grid_size]) # [2, 1, grid_size, grid_size]
-    pos_embed = get_2d_sincos_embed_from_grid(embed_dim, grid)
+    pos_embed = get_2d_sincos_pos_embed_from_grid(embed_dim, grid)
 
     if cls_token:
         pos_embed = np.concatenate([np.zeros([1, embed_dim]), pos_embed], axis=0)
     
     return pos_embed
 
-def get_2d_sincos_embed_from_grid(embed_dim, grid):
+def get_2d_sincos_pos_embed_from_grid(embed_dim, grid):
     # grid = [2, 1, grid_size, grid_size]
     assert embed_dim % 2 == 0, 'embed_dim 짝수여야한다네요'
 
